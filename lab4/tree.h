@@ -1,5 +1,7 @@
 ﻿#pragma once
 #include <iostream>
+#include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -74,25 +76,28 @@ private:
 		}
 	}
 
+	void walk(Node* root, vector<int>& vec) {
+		if (!root) return;
+
+		if (root)
+		{
+			walk(root->_left, vec);
+			vec.push_back(root->_data);
+			walk(root->_right, vec);
+		}
+	}
+
 public:
 	MySet() : _root(nullptr) {}
 
 	MySet(const MySet& rhs) : _root(nullptr) {
-		copy_data(rhs.get_root());
+		copy_data(rhs._root);
 	}
 
 	MySet& operator=(const MySet& rhs) {
 		MySet copy(rhs);
 		swap(copy);
 		return *this;
-	}
-
-	Node* get_root() const {
-		return _root;
-	}
-
-	Node* get_root() {
-		return _root;
 	}
 
 	void print() {
@@ -149,23 +154,32 @@ public:
 	~MySet() {
 		delete_set(_root);
 	}
+
+	vector <int> to_vector() {
+		vector<int>result;
+		walk(_root, result);
+		return result;
+	}
 };
 
-void delete_same(MySet& tree, Node* node) {
-	if (node) {
-		delete_same(tree, node->_left);
-		if (tree.contains(node->_data)) tree.erase(node->_data);
-		delete_same(tree, node->_right);
-	}
+vector<int>intersection(MySet& lhs, MySet& rhs)
+{
+	vector<int>lhs_vec = lhs.to_vector();
+	vector<int>rhs_vec = rhs.to_vector();
+	vector<int>result;
+	sort(lhs_vec.begin(), lhs_vec.end());
+	sort(rhs_vec.begin(), rhs_vec.end());
+	set_intersection(lhs_vec.begin(), lhs_vec.end(), rhs_vec.begin(), rhs_vec.end(), back_inserter(result));
+	return result;
 }
 
-MySet difference(MySet& lhs, MySet& rhs) {
-	MySet diff(lhs);
-	delete_same(diff, rhs.get_root());
-	return diff;
-}
-
-MySet intersection(MySet& lhs, MySet& rhs) {
-	MySet diff = difference(lhs, rhs);
-	return difference(lhs, diff);
+vector<int>difference(MySet& lhs, MySet& rhs)
+{
+	vector<int>lhs_vec = lhs.to_vector();
+	vector<int>rhs_vec = rhs.to_vector();
+	vector<int>result;
+	sort(lhs_vec.begin(), lhs_vec.end());
+	sort(rhs_vec.begin(), rhs_vec.end());
+	set_difference(lhs_vec.begin(), lhs_vec.end(), rhs_vec.begin(), rhs_vec.end(), back_inserter(result));
+	return result;
 }

@@ -69,10 +69,22 @@ int main() {
 	tree5.print();
 
 	cout << "Difference (tree - second tree):" << endl;
-	difference(tree4, tree5).print();
-	cout << "Difference (second tree - tree):" << endl;
-	difference(tree5, tree4).print();
 
-	cout << "Intersection:" << endl;
-	intersection(tree4, tree5).print();
+	vector<int>vec_dif1 = difference(tree4, tree5);
+	for (int i = 0; i < vec_dif1.size(); ++i)
+	{
+		cout << vec_dif1[i] << " ";
+	}
+	cout << endl << "Difference (second tree - tree):" << endl;
+	vector<int>vec_dif2 = difference(tree5, tree4);
+	for (int i = 0; i < vec_dif2.size(); ++i)
+	{
+		cout << vec_dif2[i] << " ";
+	}
+	cout << endl << "Intersection:" << endl;
+	vector<int>vec_intersec = intersection(tree4, tree5);
+	for (int i = 0; i < vec_intersec.size(); ++i)
+	{
+		cout << vec_intersec[i] << " ";
+	}
 }
