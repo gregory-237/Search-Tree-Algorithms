@@ -162,24 +162,34 @@ public:
 	}
 };
 
-vector<int>intersection(MySet& lhs, MySet& rhs)
+MySet intersection(MySet& lhs, MySet& rhs)
 {
 	vector<int>lhs_vec = lhs.to_vector();
 	vector<int>rhs_vec = rhs.to_vector();
 	vector<int>result;
+	MySet result_set;
 	sort(lhs_vec.begin(), lhs_vec.end());
 	sort(rhs_vec.begin(), rhs_vec.end());
 	set_intersection(lhs_vec.begin(), lhs_vec.end(), rhs_vec.begin(), rhs_vec.end(), back_inserter(result));
-	return result;
+	for (int i = 0; i < result.size(); ++i)
+	{
+		result_set.insert(result[i]);
+	}
+	return result_set;
 }
 
-vector<int>difference(MySet& lhs, MySet& rhs)
+MySet difference(MySet& lhs, MySet& rhs)
 {
 	vector<int>lhs_vec = lhs.to_vector();
 	vector<int>rhs_vec = rhs.to_vector();
 	vector<int>result;
+	MySet result_set;
 	sort(lhs_vec.begin(), lhs_vec.end());
 	sort(rhs_vec.begin(), rhs_vec.end());
 	set_difference(lhs_vec.begin(), lhs_vec.end(), rhs_vec.begin(), rhs_vec.end(), back_inserter(result));
-	return result;
+	for (int i = 0; i < result.size(); ++i)
+	{
+		result_set.insert(result[i]);
+	}
+	return result_set;
 }
